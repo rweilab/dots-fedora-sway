@@ -410,15 +410,15 @@ end
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "markdown",
   callback = function()
-    vim.keymap.set("n", "gd", follow_markdown_link, { buffer = true }) 
+    vim.keymap.set("n", "gd", follow_markdown_link, { buffer = true })
   end,
 })
 
 
 vim.keymap.set("n", "<Leader>fnn", function()
-  Snacks.picker.files({cwd = "~/notes"})
+  Snacks.picker.files({cwd = "~/syncthing/RAM/notes"})
 end, {desc = "Find notes by name"})
 
 vim.keymap.set("n", "<Leader>fng", function()
-  Snacks.picker.grep({cwd = "~/notes"})
+  Snacks.picker.grep({cwd = "~/synthing/RAM/notes"})
 end, {desc = "Grep notes"})

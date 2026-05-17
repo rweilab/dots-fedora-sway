@@ -40,7 +40,7 @@
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/org/")
+(setq org-directory "~syncthing/RAM/org/")
 
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
@@ -82,21 +82,21 @@
 (setq doom-theme 'doom-one)
 (setq display-line-numbers-type t)
 (setq doom-font (font-spec :family "monospace" :size 18))
-(setq org-directory (expand-file-name "~/org/"))
+(setq org-directory (expand-file-name "~/syncthing/RAM/org"))
 
 
 (after! org
   ;; explicit paths (avoid nil)
-  (defvar my-org-dir (expand-file-name "/home/slap/org/"))
+  (defvar my-org-dir (expand-file-name "/home/slap/syncthing/RAM/org"))
   (setq org-agenda-files
         (list (concat my-org-dir "inbox.org")
-              (concat my-org-dir "2026-spring.org")))
+              (concat my-org-dir "maintodo.org")))
   (setq org-default-notes-file (concat my-org-dir "inbox.org"))
 
   ;; capture template using explicit absolute path
   (setq org-capture-templates
         '(("t" "Todo" entry
-           (file+headline "/home/slap/org/inbox.org" "Tasks")
+           (file+headline "/home/slap/syncthing/RAM/org/inbox.org" "Tasks")
            "* TODO [#B] %?\n  %U\n")))
 
   ;; refile settings
