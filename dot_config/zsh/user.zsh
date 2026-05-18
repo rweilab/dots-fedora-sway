@@ -23,7 +23,7 @@ export VISUAL=nvim
 
 alias chezomi="chezmoi"
 alias n="nvim"
-alias nn="nvim ~/syncthing/2026_Spring/notes"
+alias nn="nvim ~/syncthing/RAM/notes"
 alias c="clear"
 alias rb="systemctl reboot"
 alias myvnc="start-vnc"
