@@ -415,10 +415,16 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 
+local notes_dir = vim.fn.expand("~/syncthing/RAM/notes")
+
 vim.keymap.set("n", "<Leader>fnn", function()
-  Snacks.picker.files({cwd = "~/syncthing/RAM/notes"})
-end, {desc = "Find notes by name"})
+  Snacks.picker.files({
+    cwd = notes_dir,
+  })
+end, { desc = "Find notes by name" })
 
 vim.keymap.set("n", "<Leader>fng", function()
-  Snacks.picker.grep({cwd = "~/synthing/RAM/notes"})
-end, {desc = "Grep notes"})
+  Snacks.picker.grep({
+    cwd = notes_dir,
+  })
+end, { desc = "Grep notes" })
