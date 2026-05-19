@@ -12,7 +12,7 @@
   font-size: 12px;
   font-weight: bold;
   min-height: 0px;
-  color: @fg;
+  /* color: @fg; */
 }
 
 /* --- Waybar ---*/
