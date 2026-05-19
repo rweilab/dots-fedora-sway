@@ -1,0 +1,9 @@
+# completion
+autoload -Uz compinit
+compinit
+
+# source all *.zsh modules
+for file in "$ZDOTDIR"/*.zsh(.N); do
+    [[ "$file" != "$ZDOTDIR/.zshrc" ]] && source "$file"
+done
+

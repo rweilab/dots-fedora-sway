@@ -24,18 +24,10 @@ export VISUAL=nvim
 alias chezomi="chezmoi"
 alias n="nvim"
 alias nn="nvim ~/syncthing/RAM/notes"
+alias cdn="cd ~/syncthing/RAM/notes && nvim ~/syncthing/RAM/notes"
 alias c="clear"
 alias rb="systemctl reboot"
 alias myvnc="start-vnc"
 
 
-
-
 export PATH="$HOME/.cargo/bin:$PATH"
-
-
-# ----- good bloat identifier ------
-# zmodload zsh/zprof
-# # (Close and reopen terminal, then run:)
-# zprof
-# -----
