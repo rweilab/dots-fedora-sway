@@ -72,7 +72,7 @@ require("lazy").setup({
         install_dir = vim.fn.stdpath("data") .. "/site",
       })
       require("nvim-treesitter").install({
-        "lua", "vim", "bash", "typescript", "rust", "c", "cpp",
+        "lua", "vim", "bash", "typescript", "rust", "c", "cpp", "python",
         "markdown", "markdown_inline", "latex", "html", "yaml", -- for render-markdown.nvim
       })
     end,
