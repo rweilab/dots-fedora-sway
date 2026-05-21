@@ -1,4 +1,4 @@
-export PATH="$HOME/mybin:$PATH"
+export PATH="$HOME/bin:$PATH"
 #  Startup 
 # Commands to execute on startup (before the prompt is shown)
 # Check if the interactive shell option is set
