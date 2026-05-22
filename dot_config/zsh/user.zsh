@@ -4,7 +4,7 @@ export PATH="$HOME/bin:$PATH"
 # Check if the interactive shell option is set
 if [[ $- == *i* ]]; then
   date-progress 2025-06-10 2026-06-10 120,20,120 255,100,0
-  date-progress 2026-05-12 2026-09-02 
+  date-progress 2026-05-12 2026-09-02 120,20,120 255,100,0
 fi
 
  DISABLE_MAGIC_FUNCTIONS="true"

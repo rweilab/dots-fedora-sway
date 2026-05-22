@@ -81,7 +81,7 @@
 ;; Basic Doom settings
 (setq doom-theme 'doom-one)
 (setq display-line-numbers-type t)
-(setq doom-font (font-spec :family "monospace" :size 18))
+(setq doom-font (font-spec :family "monospace" :size 16))
 (setq org-directory (expand-file-name "~/syncthing/RAM/org"))
 
 
