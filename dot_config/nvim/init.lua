@@ -72,7 +72,7 @@ require("lazy").setup({
         install_dir = vim.fn.stdpath("data") .. "/site",
       })
       require("nvim-treesitter").install({
-        "lua", "vim", "bash", "typescript", "rust", "c", "cpp", "python",
+        "lua", "vim", "bash", "typescript", "rust", "c", "cpp", "python", "mermaid",
         "markdown", "markdown_inline", "latex", "html", "yaml", -- for render-markdown.nvim
       })
     end,
@@ -295,7 +295,7 @@ require("lazy").setup({
       -- { "<leader>su", function() Snacks.picker.undo() end, desc = "Undo History" },
       -- { "<leader>uC", function() Snacks.picker.colorschemes() end, desc = "Colorschemes" },
       -- -- LSP
-      { "gd", function() Snacks.picker.lsp_definitions() end, desc = "Goto Definition" },
+      -- { "gd", function() Snacks.picker.lsp_definitions() end, desc = "Goto Definition" },
       -- { "gD", function() Snacks.picker.lsp_declarations() end, desc = "Goto Declaration" },
       -- { "gr", function() Snacks.picker.lsp_references() end, nowait = true, desc = "References" },
       { "grr", function() Snacks.picker.lsp_references({auto_confirm = false}) end, desc = "References (Snacks)", },
@@ -357,54 +357,64 @@ local function codelens_supported(bufnr)
   return false
 end
 
-vim.api.nvim_create_autocmd(
-  { 'TextChanged', 'InsertLeave', 'CursorHold', 'BufEnter' },
-  {
-    buffer = bufnr,
-    callback = function()
-      if codelens_supported(bufnr) then
-        vim.lsp.codelens.enable(true)
-      end
-    end,
-  }
-)
+vim.api.nvim_create_autocmd({
+  "InsertLeave",
+  "CursorHold",
+  "BufEnter",
+}, {
+  callback = function(args)
+    if codelens_supported(args.buf) then
+      vim.lsp.codelens.enable(true)
+    end
+  end,
+})
 
 -- Restart LSP upon :w so codelens updates file references
-vim.api.nvim_create_autocmd("BufWrite", {
+-- vim.api.nvim_create_autocmd("BufWrite", {
+--   callback = function()
+--       vim.cmd("lsp restart")
+--   end,
+-- })
+
+vim.api.nvim_create_autocmd("BufWritePost", {
   callback = function()
+    if #vim.lsp.get_clients({ bufnr = 0 }) > 0 then
       vim.cmd("lsp restart")
+    end
   end,
 })
 
 -- Command either jumps to linked note definition, or creates one through code_action
 local function follow_markdown_link()
-  local win = 0
-  local before = vim.fn.gettagstack(win)
+  local client = vim.lsp.get_clients({ bufnr = 0 })[1]
+  if not client then
+    return
+  end
 
-  vim.lsp.buf.definition()
+  local params = vim.lsp.util.make_position_params(
+    0,
+    client.offset_encoding
+  )
 
-  vim.defer_fn(function()
-    local after = vim.fn.gettagstack(win)
-
-    -- jumped successfully
-    if after.curidx > before.curidx then
+  vim.lsp.buf_request(0, "textDocument/definition", params, function(err, result)
+    if err then
       return
     end
 
-    -- create file
+    -- definition exists
+    if result and not vim.tbl_isempty(result) then
+      vim.lsp.util.show_document(result[1], client.offset_encoding)
+      return
+    end
+
+    -- no definition -> create note
     vim.lsp.buf.code_action({
       filter = function(action)
         return action.title and action.title:match("Create")
       end,
       apply = true,
     })
-
-    -- refresh LSP so new file is indexed
-    vim.defer_fn(function()
-      vim.cmd("lsp restart")
-    end, 10)
-
-  end, 10)
+  end)
 end
 
 vim.api.nvim_create_autocmd("FileType", {
